@@ -10,8 +10,39 @@ var configuration;
     'use strict';
 
     rtcFn.initRtcConf = function(){
+        var p120RtcWidth= {
+            audio: 60,
+            video: 120,
+            data: 30 * 1000 * 1000
+        };
+        var p240RtcWidth= {
+            audio: 60,
+            video: 240,
+            data: 30 * 1000 * 1000
+        };
+        var p360RtcWidth = {
+            audio: 60,
+            video: 360,
+            data: 30 * 1000 * 1000
+        };
+        var p480RtcWidth = {
+            audio: 60,
+            video: 480,
+            data: 30 * 1000 * 1000
+        };
+        var p720RtcWidth = {
+            audio: 60,
+            video: 720,
+            data: 30 * 1000 * 1000
+        };
+        var p1080RtcWidth = {
+            audio: 60,
+            video: 1080,
+            data: 30 * 1000 * 1000
+        };
+
         var conf = {
-            bandwidth: { audio: 64, video: 512, data: 30 * 1000 * 1000 },
+            bandwidth: p120RtcWidth,
             //attachStream: MediaStream,
             //attachStreams: [MediaStream_1, MediaStream_2, MediaStream_3],
 

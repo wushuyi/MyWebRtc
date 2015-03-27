@@ -18,23 +18,31 @@ app.all('*', function(req, res, next){
 });
 
 var p2p = {};
+var num2p = [];
+
+function getIdByNum(index){
+    return num2p[index];
+}
 
 io.on('connection', function (socket) {
     socket.on('getId', function(e){
-        var myId = socket.id;
+        num2p.push(socket.id);
+        var myId = num2p.length - 1;
+        socket.selfId = myId;
         socket.emit('getId',  {
                 id: myId
             });
     });
     socket.on('setId', function(e){
         console.log(e.id);
-        socket.id = e.id;
+        p2p[socket.id] = getIdByNum(e.id)
     });
     socket.on('reqSetOtherId', function(e){
-        p2p[socket.id] = e.id;
-        p2p[e.id] = socket.id;
+        var otherId = getIdByNum(e.id);
+        p2p[socket.id] = otherId;
+        p2p[otherId] = socket.id;
         socket.to(p2p[socket.id]).emit('resSetOtherId', {
-                id: socket.id
+                id: socket.selfId
             });
     });
     socket.on('reqNeedPeer', function(e){
@@ -54,5 +62,6 @@ io.on('connection', function (socket) {
         socket.to(p2p[socket.id]).emit('resClose', e);
     });
 });
+
 
 server.listen(3000);
